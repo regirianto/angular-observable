@@ -1,0 +1,36 @@
+<h3>Form</h3>
+<div class="card">
+  <div class="card-body">
+    <form [formGroup]="todoForm" (ngSubmit)="onSubmitTodo()">
+      <div class="input-group mb-3">
+        <div class="input-group-text">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            formControlName="{{ field.IS_DONE }}"
+          />
+        </div>
+        <input
+          type="text"
+          class="form-control {{ isFieldValid(field.NAME) }}"
+          placeholder="Todo"
+          aria-label="Todo"
+          formControlName="{{ field.NAME }}"
+        />
+        <button
+          appBsButton
+          color="primary"
+          size="md"
+          type="submit"
+          [disabled]="!todoForm.valid"
+        >
+          ADD
+        </button>
+      </div>
+      <app-validation-message
+        [control]="todoForm.get(field.NAME)"
+        [field]="field.NAME"
+      ></app-validation-message>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<section class="sect-p4 mt-5">
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col">
+        <h1 class="mt-5">Component A</h1>
+        <div class="btn-group">
+          <a
+            routerLink="/demo/sample/component-b"
+            class="btn btn-outline-primary"
+            >Component B</a
+          >
+          <button class="btn btn-outline-danger" (click)="isToggleButton()">
+            Toggle Child
+          </button>
+        </div>
+        <ng-container *ngIf="toggle">
+          <app-child-a></app-child-a>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</section>
