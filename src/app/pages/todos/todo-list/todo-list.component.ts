@@ -6,25 +6,23 @@ import { TodosService } from '../services/todos.service';
 @Component({
   selector: 'app-todo-list',
   templateUrl: './todo-list.component.html',
-  styleUrls: ['./todo-list.component.scss']
+  styleUrls: ['./todo-list.component.scss'],
 })
 export class TodoListComponent implements OnInit {
   todos: Todo[] = [];
   title: string = 'List';
-  constructor(
-    private readonly todoService: TodosService
-  ) { }
+  constructor(private readonly todoService: TodosService) {}
 
   ngOnInit(): void {
-    this.loadTodo()
+    this.loadTodo();
   }
 
   loadTodo(): void {
-    this.todos = this.todoService.list()
+    this.todoService.list().subscribe((result) => (this.todos = result));
   }
 
   onCheckTodo(todo: Todo): void {
-    this.todoService.checked(todo);
+    this.todoService.checked(todo).subscribe();
   }
 
   onDeleteTodo(todo: Todo): void {
@@ -32,8 +30,8 @@ export class TodoListComponent implements OnInit {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'Can\'t delete todo',
-      })
+        text: "Can't delete todo",
+      });
     } else {
       Swal.fire({
         title: 'Are you sure?',
@@ -42,15 +40,11 @@ export class TodoListComponent implements OnInit {
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonText: 'Yes, delete it!',
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire(
-            'Deleted!',
-            'Your file has been deleted.',
-            'success'
-          );
-          this.todoService.remove(todo.id);
+          Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+          this.todoService.remove(todo.id).subscribe();
         }
       });
     }
